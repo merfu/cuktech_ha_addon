@@ -1,0 +1,47 @@
+name: "CUKTECH BLE Server"
+version: "1.0.0"
+slug: "cuktech_ble"
+description: "BLE-Bridge fuer den CUKTECH 10 GaN Charger Ultra -> MQTT / Home Assistant"
+url: "https://github.com/kairui1108/cuktech-ble-server"
+arch:
+  - amd64
+  - aarch64
+init: false
+startup: services
+boot: auto
+watchdog: "tcp://[HOST]:[PORT:8199]"
+
+host_network: true
+host_dbus: true
+privileged:
+  - SYS_ADMIN
+  - NET_ADMIN
+
+ports:
+  8199/tcp: 8199
+ports_description:
+  8199/tcp: "Web-UI (Power-Charts, Port-/Protokollsteuerung, Konfiguration)"
+
+options:
+  ble_mac: ""
+  ble_token: ""
+  ble_key: ""
+  mqtt_host: ""
+  mqtt_port: 1883
+  mqtt_user: ""
+  mqtt_password: ""
+  server_port: 8199
+  bemfa_uid: ""
+  log_level: "info"
+
+schema:
+  ble_mac: "str"
+  ble_token: "str?"
+  ble_key: "str?"
+  mqtt_host: "str"
+  mqtt_port: "port"
+  mqtt_user: "str?"
+  mqtt_password: "password?"
+  server_port: "port"
+  bemfa_uid: "str?"
+  log_level: "list(debug|info|warning|error)"
