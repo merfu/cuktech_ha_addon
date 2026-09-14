@@ -11,12 +11,14 @@ RUN apk add --no-cache \
         bluez-btmon \
         dbus
 
-ARG CUKTECH_REF=main
+# Temporaer: Fork mit Zombie-BLE-Channel-Fix, bis PR #5 upstream gemerged ist
+# https://github.com/kairui1108/cuktech-ble-server/pull/5
+ARG CUKTECH_REPO=https://github.com/merfu/cuktech-ble-server.git
+ARG CUKTECH_REF=merfu-patch-1
 WORKDIR /app
 
-# Bestehendes Projekt 1:1 uebernehmen, keine eigene Kopie pflegen
 RUN git clone --depth 1 --branch ${CUKTECH_REF} \
-        https://github.com/kairui1108/cuktech-ble-server.git /app \
+        ${CUKTECH_REPO} /app \
     && pip install --no-cache-dir --break-system-packages -e .
 
 COPY run.sh /
